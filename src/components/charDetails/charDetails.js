@@ -4,11 +4,11 @@ import GotService from '../../services/gotService';
 // import Spinner from '../spinner';
 
 
-const Field = ({char, field, label}) => {
+const Field = ({item, field, label}) => {
     return (
         <li className="list-group-item d-flex justify-content-between">
             <span className="term">{label}</span>
-            <span>{char[field]}</span>
+            <span>{item[field]}</span>
         </li>
     )
 }
@@ -34,7 +34,7 @@ export default class CharDetails extends Component {
             this.props.itemDetails(itemId)
                 .then((item) => {
                     console.log(`THEN ${item}`)
-                    this.setState({char: item})
+                    this.setState({item: item})
                 })
         }
     }
@@ -44,21 +44,21 @@ export default class CharDetails extends Component {
         }
     }
     render() {
-        const {char} = this.state;
-        console.log(` CHARSS ${char}`);
-        if (!char){
+        const {item} = this.state;
+        console.log(` CHARSS ${item}`);
+        if (!item){
             return (
                 <span>Select </span>
             )
         }
-        const {name} = char;
+        const {name} = item;
         
         return (
             <div className="char-details rounded">
                 <h4>{name}</h4>
                 <ul className="list-group list-group-flush">
                     { React.Children.map(this.props.children,  (child) =>  { 
-                        return React.cloneElement(child, {char})
+                        return React.cloneElement(child, {item})
                     }) }
                 </ul>
             </div>

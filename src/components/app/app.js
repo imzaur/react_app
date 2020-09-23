@@ -5,8 +5,9 @@ import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
 import CharacterPage from '../characterPage';
 import GotService from '../../services/gotService';
-import BooksPage from '../booksPage';
+import {BooksPage, BookItem} from '../booksPage';
 import HousePage from '../housePage.js';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 
 export default class App extends Component {
@@ -42,7 +43,8 @@ export default class App extends Component {
         }
 
         return (
-            <> 
+            <Router>
+                <div className='app'> 
                 <Container>
                     <Header />
                 </Container>
@@ -57,11 +59,18 @@ export default class App extends Component {
                             {randomCharContent}
                         </Col>
                     </Row>
-                    <CharacterPage/>
-                    <BooksPage/>
+                    <Route path='/characters' component={CharacterPage}/>
+                    <Route path='/books' exact component={BooksPage}/>
+                    <Route path='/houses' component={HousePage}/>
+                    <Route path='/books/:id' render={({match}) => {
+                                    console.log(match);
+                                    const {id} = match.params;
+                                    return <BookItem bookId={id}/>
+                    }}/>
                     <HousePage/>
                 </Container>
-            </>
+                </div>
+            </Router>
         );
     }    
     
